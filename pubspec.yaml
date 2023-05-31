@@ -39,6 +39,12 @@ dependencies:
   flutter_native_splash: any
   flutter_launcher_icons: any
   google_fonts: any
+  flutter_signin_button: any
+  google_sign_in: any
+  provider: any
+  introduction_screen: any
+  smooth_page_indicator: any
+  shared_preferences: any
 
 dev_dependencies:
   flutter_test:
