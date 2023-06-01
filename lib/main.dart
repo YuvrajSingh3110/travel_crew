@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:appwrite/appwrite.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:travel_crew/constants/constants.dart';
+import 'package:travel_crew/navBar/bottomNavBar.dart';
 import 'package:travel_crew/services/localDB.dart';
 import 'package:travel_crew/services/providers.dart';
-import 'package:travel_crew/views/home.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:travel_crew/views/introScreen.dart';
 import 'package:travel_crew/views/login.dart';
-import 'package:travel_crew/views/signup.dart';
 
-void main() async{
+void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   Client client = Client();
@@ -25,7 +23,6 @@ void main() async{
 }
 
 class MyApp extends StatefulWidget {
-
   const MyApp({super.key});
 
   @override
@@ -37,17 +34,17 @@ class _MyAppState extends State<MyApp> {
 
   bool showHome = false;
 
-  getLoggedinState() async{
+  getLoggedinState() async {
     await LocalDB.getUserId().then((value) {
       setState(() {
-        if(value.toString() != "null"){
+        if (value.toString() != "null") {
           isLogin = true;
         }
       });
     });
   }
 
-  getShowHomeState() async{
+  getShowHomeState() async {
     await LocalDB.getShowHome().then((value) {
       setState(() {
         showHome = value!;
@@ -77,9 +74,8 @@ class _MyAppState extends State<MyApp> {
           useMaterial3: true,
         ),
         debugShowCheckedModeBanner: false,
-        home: showHome ? (isLogin ? Home() : Login()) : IntroScreen(),
+        home: showHome ? (isLogin ? BottomNavBar() : Login()) : IntroScreen(),
       ),
     );
   }
 }
-
