@@ -23,7 +23,7 @@ class _SignUpState extends State<SignUp> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: true,
         backgroundColor: Color(0xff141419),
         body: SingleChildScrollView(
           child: Container(
@@ -151,7 +151,7 @@ class _SignUpState extends State<SignUp> {
                               AuthState state =
                                   Provider.of<AuthState>(context, listen: false);
                               state.createAccount(_name.toString(), _email.toString(),
-                                  _password.toString(), _userid.toString());
+                                  _password.toString(), _userid as String);
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
