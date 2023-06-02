@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:travel_crew/views/chat.dart';
 import 'package:travel_crew/views/explore.dart';
@@ -25,6 +27,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   @override
   Widget build(BuildContext context) {
+    log("here");
     return Scaffold(
       body: screens[currIndex],
       bottomNavigationBar: BottomNavigationBar(

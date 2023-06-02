@@ -150,8 +150,8 @@ class _SignUpState extends State<SignUp> {
                             onTap: () {
                               AuthState state =
                                   Provider.of<AuthState>(context, listen: false);
-                              state.createAccount(_name.toString(), _email.toString(),
-                                  _password.toString(), _userid.toString());
+                              state.createAccount(_name.text.toString(), _email.text.toString(),
+                                  _password.text.toString(), _userid.text.toString());
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
