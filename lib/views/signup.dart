@@ -42,10 +42,9 @@ class _SignUpState extends State<SignUp> {
                   width: MediaQuery.of(context).size.width,
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: Colors.white)
-                  ),
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: Colors.white)),
                   child: Column(
                     children: [
                       Text(
@@ -59,17 +58,24 @@ class _SignUpState extends State<SignUp> {
                       Container(
                         padding: EdgeInsets.all(5),
                         decoration: BoxDecoration(
-                          border: Border.all(color: Colors.white),
+                            border: Border.all(color: Colors.white),
                             borderRadius: BorderRadius.circular(4)),
                         child: Row(
                           children: [
-                            Icon(Icons.person, color: Colors.white,),
-                            SizedBox(width: 10,),
+                            Icon(
+                              Icons.person,
+                              color: Colors.white,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
                             Expanded(
                               child: TextField(
                                 controller: _name,
                                 style: TextStyle(color: Colors.white),
-                                decoration: InputDecoration(hintText: "Name", hintStyle: TextStyle(color: Colors.white)),
+                                decoration: InputDecoration(
+                                    hintText: "Name",
+                                    hintStyle: TextStyle(color: Colors.white)),
                               ),
                             ),
                           ],
@@ -83,13 +89,20 @@ class _SignUpState extends State<SignUp> {
                             borderRadius: BorderRadius.circular(4)),
                         child: Row(
                           children: [
-                            Icon(Icons.person_add, color: Colors.white,),
-                            SizedBox(width: 10,),
+                            Icon(
+                              Icons.person_add,
+                              color: Colors.white,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
                             Expanded(
                               child: TextField(
                                 controller: _userid,
                                 style: TextStyle(color: Colors.white),
-                                decoration: InputDecoration(hintText: "User Id", hintStyle: TextStyle(color: Colors.white)),
+                                decoration: InputDecoration(
+                                    hintText: "User Id",
+                                    hintStyle: TextStyle(color: Colors.white)),
                               ),
                             ),
                           ],
@@ -103,13 +116,20 @@ class _SignUpState extends State<SignUp> {
                             borderRadius: BorderRadius.circular(4)),
                         child: Row(
                           children: [
-                            Icon(Icons.email, color: Colors.white,),
-                            SizedBox(width: 10,),
+                            Icon(
+                              Icons.email,
+                              color: Colors.white,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
                             Expanded(
                               child: TextField(
                                 controller: _email,
                                 style: TextStyle(color: Colors.white),
-                                decoration: InputDecoration(hintText: "Email", hintStyle: TextStyle(color: Colors.white)),
+                                decoration: InputDecoration(
+                                    hintText: "Email",
+                                    hintStyle: TextStyle(color: Colors.white)),
                               ),
                             ),
                           ],
@@ -123,13 +143,20 @@ class _SignUpState extends State<SignUp> {
                             borderRadius: BorderRadius.circular(4)),
                         child: Row(
                           children: [
-                            Icon(Icons.password, color: Colors.white,),
-                            SizedBox(width: 10,),
+                            Icon(
+                              Icons.password,
+                              color: Colors.white,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
                             Expanded(
                               child: TextField(
                                 controller: _password,
                                 style: TextStyle(color: Colors.white),
-                                decoration: InputDecoration(hintText: "Password", hintStyle: TextStyle(color: Colors.white)),
+                                decoration: InputDecoration(
+                                    hintText: "Password",
+                                    hintStyle: TextStyle(color: Colors.white)),
                               ),
                             ),
                           ],
@@ -146,12 +173,22 @@ class _SignUpState extends State<SignUp> {
                             borderRadius: BorderRadius.circular(50),
                           ),
                           child: InkWell(
-                            child: Text("Create Account ->", style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500, color: Colors.white), textAlign: TextAlign.center,),
+                            child: Text(
+                              "Create Account ->",
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white),
+                              textAlign: TextAlign.center,
+                            ),
                             onTap: () {
-                              AuthState state =
-                                  Provider.of<AuthState>(context, listen: false);
-                              state.createAccount(_name.toString(), _email.toString(),
-                                  _password.toString(), _userid as String);
+                              AuthState state = Provider.of<AuthState>(context,
+                                  listen: false);
+                              state.createAccount(
+                                  _name.toString(),
+                                  _email.toString(),
+                                  _password.toString(),
+                                  _userid as String);
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
@@ -171,7 +208,11 @@ class _SignUpState extends State<SignUp> {
                             indent: 10,
                             endIndent: 10,
                           ),
-                          Text("or", style: TextStyle(color: Colors.white), textAlign: TextAlign.center,),
+                          Text(
+                            "or",
+                            style: TextStyle(color: Colors.white),
+                            textAlign: TextAlign.center,
+                          ),
                           Divider(
                             color: Colors.white,
                             thickness: 5,
@@ -181,7 +222,7 @@ class _SignUpState extends State<SignUp> {
                         ],
                       ),
                       const SizedBox(height: 10),
-                      SignInButton(Buttons.GoogleDark, onPressed: (){})
+                      SignInButton(Buttons.GoogleDark, onPressed: () {})
                     ],
                   ),
                 ),
