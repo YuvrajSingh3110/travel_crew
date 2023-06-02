@@ -30,12 +30,13 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  bool isLogin = false;
 
+  bool isLogin = false;
   bool showHome = false;
 
   getLoggedinState() async {
     await LocalDB.getUserId().then((value) {
+      print(value);
       setState(() {
         if (value.toString() != "null") {
           isLogin = true;
@@ -46,6 +47,7 @@ class _MyAppState extends State<MyApp> {
 
   getShowHomeState() async {
     await LocalDB.getShowHome().then((value) {
+      print(value);
       setState(() {
         showHome = value!;
       });

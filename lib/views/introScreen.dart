@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:travel_crew/services/localDB.dart';
 import 'package:travel_crew/views/home.dart';
+import 'package:travel_crew/views/login.dart';
 
 class IntroScreen extends StatefulWidget {
   const IntroScreen({Key? key}) : super(key: key);
@@ -48,7 +49,6 @@ class _IntroScreenState extends State<IntroScreen> {
                 color: Colors.black,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-
                   children: [
                     Flexible(
                       child: Image.asset("lib/assets/images/onboardPic2.png"),
@@ -65,7 +65,6 @@ class _IntroScreenState extends State<IntroScreen> {
                 color: Colors.black,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-
                   children: [
                     Flexible(
                       child: Image.asset("lib/assets/images/onboardPic3.png"),
@@ -94,7 +93,7 @@ class _IntroScreenState extends State<IntroScreen> {
                   // final prefs = await SharedPreferences.getInstance();
                   // prefs.setBool("showHome", true);
                   Navigator.pushReplacement(
-                      context, MaterialPageRoute(builder: (context) => Home()));
+                      context, MaterialPageRoute(builder: (context) => Login()));
                 },
                 child: Text("Get Started", style: TextStyle(color: Colors.white),))
             : Container(

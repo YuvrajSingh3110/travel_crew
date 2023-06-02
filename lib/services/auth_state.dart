@@ -1,4 +1,4 @@
-import 'dart:developer';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:appwrite/appwrite.dart';
@@ -12,11 +12,11 @@ class AuthState extends ChangeNotifier{
   AuthState(){
     _init();
   }
-  _init()async{
-    await client
+  _init(){
+    account = Account(client);
+    client
         .setEndpoint(AppConstants.endPointId)
         .setProject(AppConstants.projectId);
-    account = Account(client);
     _checkIsLoggedIn();
   }
   _checkIsLoggedIn() async {
@@ -32,10 +32,10 @@ class AuthState extends ChangeNotifier{
 
   createAccount(String name, String email, String password, String uid) async {
     try {
-      log(email);
       var result =
-      await account.create(name: name, email: email, password: password, userId: "hello");
-      await LocalDB.saveUserId(ID.custom(uid));
+      await account.create(name: name, email: email, password: password, userId: uid);
+      print(uid);
+      await LocalDB.saveUserId(uid);
       print(result);
     } catch (error) {
       print(error.toString());

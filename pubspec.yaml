@@ -45,6 +45,7 @@ dependencies:
   introduction_screen: any
   smooth_page_indicator: any
   shared_preferences: any
+  dropdown_button2: any
 
 dev_dependencies:
   flutter_test:
