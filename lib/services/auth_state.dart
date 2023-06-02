@@ -34,6 +34,7 @@ class AuthState extends ChangeNotifier{
     try {
       var result =
       await account.create(name: name, email: email, password: password, userId: uid);
+      print(uid);
       await LocalDB.saveUserId(uid);
       print(result);
     } catch (error) {

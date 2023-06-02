@@ -8,7 +8,6 @@ class LocalDB{
     return await preferences.setBool("showHome", showHome);
   }
 
-  //gets uid of user
   static Future<bool?> getShowHome() async{
     SharedPreferences preferences = await SharedPreferences.getInstance();
     return preferences.getBool("showHome");
