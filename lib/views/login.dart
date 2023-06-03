@@ -1,8 +1,11 @@
+import 'package:appwrite/appwrite.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:travel_crew/navBar/bottomNavBar.dart';
 import 'package:travel_crew/services/auth_state.dart';
 import 'package:provider/provider.dart';
+import 'package:travel_crew/services/localDB.dart';
 import 'package:travel_crew/views/home.dart';
 import 'package:travel_crew/views/signup.dart';
 
@@ -16,6 +19,17 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   TextEditingController _email = TextEditingController();
   TextEditingController _password = TextEditingController();
+
+  signIn() async {
+    try {
+      AuthState state = Provider.of<AuthState>(context, listen: false);
+      await state.login(
+          email: _email.text.toString(), password: _password.text.toString());
+    } catch (e) {
+      print("login failed");
+      print(e);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,9 +48,12 @@ class _LoginState extends State<Login> {
                   height: 300,
                   width: MediaQuery.of(context).size.width,
                 ),
+                SizedBox(
+                  height: 20,
+                ),
                 Container(
                   margin: EdgeInsets.all(10),
-                  height: 530,
+                  height: 400,
                   width: MediaQuery.of(context).size.width,
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
@@ -46,65 +63,11 @@ class _LoginState extends State<Login> {
                   child: Column(
                     children: [
                       Text(
-                        "Sign up",
+                        "Log In",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 30,
                             color: Colors.white),
-                      ),
-                      const SizedBox(height: 20.0),
-                      Container(
-                        padding: EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.white),
-                            borderRadius: BorderRadius.circular(4)),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.person,
-                              color: Colors.white,
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Expanded(
-                              child: TextField(
-                                controller: _name,
-                                style: TextStyle(color: Colors.white),
-                                decoration: InputDecoration(
-                                    hintText: "Name",
-                                    hintStyle: TextStyle(color: Colors.white)),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 10.0),
-                      Container(
-                        padding: EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.white),
-                            borderRadius: BorderRadius.circular(4)),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.person_add,
-                              color: Colors.white,
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Expanded(
-                              child: TextField(
-                                controller: _userid,
-                                style: TextStyle(color: Colors.white),
-                                decoration: InputDecoration(
-                                    hintText: "User Id",
-                                    hintStyle: TextStyle(color: Colors.white)),
-                              ),
-                            ),
-                          ],
-                        ),
                       ),
                       const SizedBox(height: 10.0),
                       Container(
@@ -172,31 +135,46 @@ class _LoginState extends State<Login> {
                           ),
                           child: InkWell(
                             child: Text(
-                              "Create Account ->",
+                              "Sign In ->",
                               style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.w500,
                                   color: Colors.white),
                               textAlign: TextAlign.center,
                             ),
-                            onTap: () {
-                              AuthState state = Provider.of<AuthState>(context,
-                                  listen: false);
-                              state.createAccount(
-                                  _name.toString(),
-                                  _email.toString(),
-                                  _password.toString(),
-                                  _userid as String);
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                      const Home()));
+                            onTap: () async {
+                              await signIn();
+
+                              await LocalDB.getUserId().then((value) {
+                                if (value != null) {
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (BuildContext context) =>
+                                              const BottomNavBar()));
+                                }
+                              });
                             },
                           ),
                         ),
                       ),
                       const SizedBox(height: 10),
+                      RichText(
+                          text: TextSpan(children: <TextSpan>[
+                        TextSpan(
+                            text: "New here ?",
+                            style: TextStyle(color: Colors.white)),
+                        TextSpan(
+                            text: "Sign Up",
+                            style: TextStyle(color: Colors.blue),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SignUp()));
+                              }),
+                      ])),
+                      // ElevatedButton(onPressed: (){
+                      //   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SignUp()));
+                      // }, child: Text("Sign up")),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [

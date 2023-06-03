@@ -18,13 +18,20 @@ class _HomeState extends State<Home> {
   String? dropDownValue2;
   String? dropDownValue3;
 
+  late String date;
+
   @override
   Widget build(BuildContext context) {
+    TextEditingController _search = TextEditingController();
     return SafeArea(
       child: Scaffold(
-        floatingActionButton: FloatingActionButton(onPressed: () {  },
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {},
           backgroundColor: Colors.white,
-          child: Icon(Icons.edit_outlined, color: Colors.blue,),
+          child: Icon(
+            Icons.edit_outlined,
+            color: Colors.blue,
+          ),
           elevation: 3,
         ),
         backgroundColor: Color(0xff282E38),
@@ -37,7 +44,8 @@ class _HomeState extends State<Home> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  padding: EdgeInsets.all(10),
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  height: 80,
                   decoration: BoxDecoration(
                       color: Color(0xff353943),
                       borderRadius: BorderRadius.circular(50),
@@ -49,24 +57,22 @@ class _HomeState extends State<Home> {
                         Icons.search,
                         color: Colors.white,
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Where to?",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                color: Colors.white,
-                                fontSize: 15),
-                          ),
-                          Text(
-                            "Choose yor dream trip destination",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w300,
-                                color: Colors.white,
-                                fontSize: 10),
-                          ),
-                        ],
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: TextField(
+                          controller: _search,
+                          style: TextStyle(color: Colors.white),
+                          decoration: InputDecoration(
+                              hintText: "Choose your dream trip destination",
+                              label: Text("Where to?", style: TextStyle(color: Colors.white),),
+                              hintStyle: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w400)),
+                        ),
                       ),
                       SizedBox(
                         width: 5,
@@ -76,9 +82,28 @@ class _HomeState extends State<Home> {
                           decoration: BoxDecoration(
                               border: Border.all(color: Colors.white),
                               borderRadius: BorderRadius.circular(100)),
-                          child: Icon(
-                            Icons.calendar_today,
-                            color: Colors.white,
+                          child: InkWell(
+                            onTap: () async{
+                              // DateTime? pickedDate = await showDatePicker(
+                              //     context: context,
+                              //     initialDate: DateTime.now(),
+                              //     firstDate:DateTime(2000),
+                              //     lastDate: DateTime(2101)
+                              // );
+                              // if(pickedDate != null ){
+                              //   String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate); // format date in required form here we use yyyy-MM-dd that means time is removed
+                              //   print(formattedDate); //formatted date output using intl package =>  2022-07-04
+                              //   setState(() {
+                              //     date= formattedDate;
+                              //   });
+                              // }else{
+                              //   print("Date is not selected");
+                              // }
+                            },
+                            child: Icon(
+                              Icons.calendar_today,
+                              color: Colors.white,
+                            ),
                           )),
                     ],
                   ),
@@ -86,162 +111,165 @@ class _HomeState extends State<Home> {
                 SizedBox(
                   height: 15,
                 ),
-                //Dropdownmenu#4F4330
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    //gender
-                    DropdownButtonHideUnderline(
-                      child: DropdownButton2(
-                        hint: Text(
-                          'Gender',
-                          style: TextStyle(color: Colors.white, fontSize: 15),
-                        ),
-                        // dropdownItems: list1,
-                        value: dropDownValue1,
-                        items: gender
-                            .map((item) => DropdownMenuItem<String>(
-                                  value: item,
-                                  child: Text(
-                                    item,
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ))
-                            .toList(),
-                        onChanged: (item) {
-                          setState(() {
-                            dropDownValue1 = item as String;
-                          });
-                        },
-                        buttonStyleData: ButtonStyleData(
-                          padding: EdgeInsets.symmetric(horizontal: 5),
-                          width: 90,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            color: Color(0xff4F3238),
+                //Dropdownmenu
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      //gender
+                      DropdownButtonHideUnderline(
+                        child: DropdownButton2(
+                          hint: Text(
+                            'Gender',
+                            style: TextStyle(color: Colors.white, fontSize: 15),
                           ),
-                          elevation: 2,
-                        ),
-                        iconStyleData: IconStyleData(
-                          iconSize: 20,
-                          iconDisabledColor: Colors.white70,
-                          iconEnabledColor: Colors.white,
-                        ),
-                        dropdownStyleData: DropdownStyleData(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Color(0xff4F3238),
+                          // dropdownItems: list1,
+                          value: dropDownValue1,
+                          items: gender
+                              .map((item) => DropdownMenuItem<String>(
+                                    value: item,
+                                    child: Text(
+                                      item,
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ))
+                              .toList(),
+                          onChanged: (item) {
+                            setState(() {
+                              dropDownValue1 = item as String;
+                            });
+                          },
+                          buttonStyleData: ButtonStyleData(
+                            padding: EdgeInsets.symmetric(horizontal: 5),
+                            width: 90,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30),
+                              color: Color(0xff4F3238),
+                            ),
+                            elevation: 2,
                           ),
-                          elevation: 8,
-                        ),
-                        menuItemStyleData: const MenuItemStyleData(
-                          height: 40,
-                          padding: EdgeInsets.only(left: 14, right: 14),
+                          iconStyleData: IconStyleData(
+                            iconSize: 20,
+                            iconDisabledColor: Colors.white70,
+                            iconEnabledColor: Colors.white,
+                          ),
+                          dropdownStyleData: DropdownStyleData(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Color(0xff4F3238),
+                            ),
+                            elevation: 8,
+                          ),
+                          menuItemStyleData: const MenuItemStyleData(
+                            height: 40,
+                            padding: EdgeInsets.only(left: 14, right: 14),
+                          ),
                         ),
                       ),
-                    ),
-                    //budget
-                    DropdownButtonHideUnderline(
-                      child: DropdownButton2(
-                        hint: Text(
-                          'Budget',
-                          style: TextStyle(color: Colors.white, fontSize: 15),
-                        ),
-                        // dropdownItems: list1,
-                        value: dropDownValue2,
-                        items: budget
-                            .map((item) => DropdownMenuItem<String>(
-                                  value: item,
-                                  child: Text(
-                                    item,
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ))
-                            .toList(),
-                        onChanged: (item) {
-                          setState(() {
-                            dropDownValue2 = item as String;
-                          });
-                        },
-                        buttonStyleData: ButtonStyleData(
-                          padding: EdgeInsets.symmetric(horizontal: 5),
-                          width: 120,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            color: Color(0xff4F4330),
+                      //budget
+                      DropdownButtonHideUnderline(
+                        child: DropdownButton2(
+                          hint: Text(
+                            'Budget',
+                            style: TextStyle(color: Colors.white, fontSize: 15),
                           ),
-                          elevation: 2,
-                        ),
-                        iconStyleData: IconStyleData(
-                          iconSize: 20,
-                          iconDisabledColor: Colors.white70,
-                          iconEnabledColor: Colors.white,
-                        ),
-                        dropdownStyleData: DropdownStyleData(
-                          width: 150,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Color(0xff4F4330),
+                          // dropdownItems: list1,
+                          value: dropDownValue2,
+                          items: budget
+                              .map((item) => DropdownMenuItem<String>(
+                                    value: item,
+                                    child: Text(
+                                      item,
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ))
+                              .toList(),
+                          onChanged: (item) {
+                            setState(() {
+                              dropDownValue2 = item as String;
+                            });
+                          },
+                          buttonStyleData: ButtonStyleData(
+                            padding: EdgeInsets.symmetric(horizontal: 5),
+                            width: 120,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30),
+                              color: Color(0xff4F4330),
+                            ),
+                            elevation: 2,
                           ),
-                          elevation: 8,
-                        ),
-                        menuItemStyleData: const MenuItemStyleData(
-                          height: 40,
-                          padding: EdgeInsets.only(left: 14, right: 14),
+                          iconStyleData: IconStyleData(
+                            iconSize: 20,
+                            iconDisabledColor: Colors.white70,
+                            iconEnabledColor: Colors.white,
+                          ),
+                          dropdownStyleData: DropdownStyleData(
+                            width: 150,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Color(0xff4F4330),
+                            ),
+                            elevation: 8,
+                          ),
+                          menuItemStyleData: const MenuItemStyleData(
+                            height: 40,
+                            padding: EdgeInsets.only(left: 14, right: 14),
+                          ),
                         ),
                       ),
-                    ),
-                    //no. of people
-                    DropdownButtonHideUnderline(
-                      child: DropdownButton2(
-                        hint: Text(
-                          'No. of People',
-                          style: TextStyle(color: Colors.white, fontSize: 15),
-                        ),
-                        // dropdownItems: list1,
-                        value: dropDownValue3,
-                        items: teamStrength
-                            .map((item) => DropdownMenuItem<String>(
-                                  value: item,
-                                  child: Text(
-                                    item,
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ))
-                            .toList(),
-                        onChanged: (item) {
-                          setState(() {
-                            dropDownValue3 = item as String;
-                          });
-                        },
-                        buttonStyleData: ButtonStyleData(
-                          padding: EdgeInsets.symmetric(horizontal: 5),
-                          width: 130,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            color: Color(0xff2A4C3E),
+                      //no. of people
+                      DropdownButtonHideUnderline(
+                        child: DropdownButton2(
+                          hint: Text(
+                            'No. of People',
+                            style: TextStyle(color: Colors.white, fontSize: 15),
                           ),
-                          elevation: 2,
-                        ),
-                        iconStyleData: IconStyleData(
-                          iconSize: 20,
-                          iconDisabledColor: Colors.white70,
-                          iconEnabledColor: Colors.white,
-                        ),
-                        dropdownStyleData: DropdownStyleData(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Color(0xff2A4C3E),
+                          // dropdownItems: list1,
+                          value: dropDownValue3,
+                          items: teamStrength
+                              .map((item) => DropdownMenuItem<String>(
+                                    value: item,
+                                    child: Text(
+                                      item,
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ))
+                              .toList(),
+                          onChanged: (item) {
+                            setState(() {
+                              dropDownValue3 = item as String;
+                            });
+                          },
+                          buttonStyleData: ButtonStyleData(
+                            padding: EdgeInsets.symmetric(horizontal: 5),
+                            width: 130,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30),
+                              color: Color(0xff2A4C3E),
+                            ),
+                            elevation: 2,
                           ),
-                          elevation: 8,
-                        ),
-                        menuItemStyleData: const MenuItemStyleData(
-                          height: 40,
-                          padding: EdgeInsets.only(left: 14, right: 14),
+                          iconStyleData: IconStyleData(
+                            iconSize: 20,
+                            iconDisabledColor: Colors.white70,
+                            iconEnabledColor: Colors.white,
+                          ),
+                          dropdownStyleData: DropdownStyleData(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Color(0xff2A4C3E),
+                            ),
+                            elevation: 8,
+                          ),
+                          menuItemStyleData: const MenuItemStyleData(
+                            height: 40,
+                            padding: EdgeInsets.only(left: 14, right: 14),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
                 SizedBox(
                   height: 20,
