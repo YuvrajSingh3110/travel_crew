@@ -3,6 +3,7 @@ import 'package:appwrite/appwrite.dart';
 import 'package:provider/provider.dart';
 import 'package:travel_crew/constants/constants.dart';
 import 'package:travel_crew/navBar/bottomNavBar.dart';
+import 'package:travel_crew/services/auth_state.dart';
 import 'package:travel_crew/services/localDB.dart';
 import 'package:travel_crew/services/providers.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -12,13 +13,6 @@ import 'package:travel_crew/views/login.dart';
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-  Client client = Client();
-  client
-      .setEndpoint(AppConstants.endPointId)
-      .setProject(AppConstants.projectId)
-      .setSelfSigned(
-          status:
-              true); // For self signed certificates, only use for development
   runApp(const MyApp());
 }
 
@@ -30,7 +24,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   bool isLogin = false;
   bool showHome = false;
 
@@ -38,7 +31,7 @@ class _MyAppState extends State<MyApp> {
     await LocalDB.getUserId().then((value) {
       print(value);
       setState(() {
-        if (value.toString() != "null") {
+        if (value != null) {
           isLogin = true;
         }
       });
@@ -58,6 +51,13 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    Client client = Client();
+    client
+        .setEndpoint(AppConstants.endPointId)
+        .setProject(AppConstants.projectId)
+        .setSelfSigned(
+        status:
+        true); // For self signed certificates, only use for development
     getLoggedinState();
     getShowHomeState();
   }
