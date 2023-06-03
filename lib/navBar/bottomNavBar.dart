@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:travel_crew/views/chat.dart';
 import 'package:travel_crew/views/explore.dart';
 import 'package:travel_crew/views/home.dart';
-import 'package:travel_crew/views/profile.dart';
+import 'package:travel_crew/views/profile/profile.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({Key? key}) : super(key: key);

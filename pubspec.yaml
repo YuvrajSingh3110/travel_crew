@@ -46,6 +46,8 @@ dependencies:
   smooth_page_indicator: any
   shared_preferences: any
   dropdown_button2: any
+  flutter_bloc: ^8.0.0
+  equatable: ^2.0.5
 
 dev_dependencies:
   flutter_test:
