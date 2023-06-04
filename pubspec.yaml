@@ -46,6 +46,8 @@ dependencies:
   smooth_page_indicator: any
   shared_preferences: any
   dropdown_button2: any
+  image_picker: any
+  intl: any
 
 dev_dependencies:
   flutter_test:
