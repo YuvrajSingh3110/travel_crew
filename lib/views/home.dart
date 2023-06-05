@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:intl/intl.dart';
+import 'package:travel_crew/views/createTrip.dart';
+import 'package:travel_crew/views/tripDetails.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -18,7 +21,7 @@ class _HomeState extends State<Home> {
   String? dropDownValue2;
   String? dropDownValue3;
 
-  late String date;
+  String date = DateTime.now().toString();
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +29,9 @@ class _HomeState extends State<Home> {
     return SafeArea(
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => CreateTrip()));
+          },
           backgroundColor: Colors.white,
           child: Icon(
             Icons.edit_outlined,
@@ -84,21 +89,22 @@ class _HomeState extends State<Home> {
                               borderRadius: BorderRadius.circular(100)),
                           child: InkWell(
                             onTap: () async{
-                              // DateTime? pickedDate = await showDatePicker(
-                              //     context: context,
-                              //     initialDate: DateTime.now(),
-                              //     firstDate:DateTime(2000),
-                              //     lastDate: DateTime(2101)
-                              // );
-                              // if(pickedDate != null ){
-                              //   String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate); // format date in required form here we use yyyy-MM-dd that means time is removed
-                              //   print(formattedDate); //formatted date output using intl package =>  2022-07-04
-                              //   setState(() {
-                              //     date= formattedDate;
-                              //   });
-                              // }else{
-                              //   print("Date is not selected");
-                              // }
+                              DateTime? pickedDate = await showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate:DateTime(2000),
+                                  lastDate: DateTime(2101)
+                              );
+                              if(pickedDate != null ){
+                                String formattedDate = DateFormat.yMMMd().format(pickedDate); // format date in required form here we use yyyy-MM-dd that means time is removed
+                                print(formattedDate); //formatted date output using intl package =>  2022-07-04
+                                setState(() {
+                                  date= formattedDate;
+                                  print("selected date is $date");
+                                });
+                              }else{
+                                print("Date is not selected");
+                              }
                             },
                             child: Icon(
                               Icons.calendar_today,
@@ -283,7 +289,9 @@ class _HomeState extends State<Home> {
                     itemBuilder: (context, index) {
                       return Container(
                         child: InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => TripDetails()));
+                          },
                           child: Column(
                             children: [
                               ClipRRect(
