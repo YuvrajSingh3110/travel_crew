@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 
 class CreateTrip extends StatefulWidget {
   const CreateTrip({Key? key}) : super(key: key);
@@ -42,6 +43,7 @@ class _CreateTripState extends State<CreateTrip> {
           child: Container(
             margin: EdgeInsets.all(20),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
                   color: Color(0xff3A3A3C),
@@ -49,19 +51,18 @@ class _CreateTripState extends State<CreateTrip> {
                   width: MediaQuery.of(context).size.width,
                   child: InkWell(
                     onTap: () {},
-                    child: Center(
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.cloud_upload,
-                            color: Colors.white,
-                          ),
-                          Text(
-                            "Upload Image",
-                            style: TextStyle(fontSize: 20, color: Colors.white),
-                          )
-                        ],
-                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.cloud_upload,
+                          color: Colors.white,
+                        ),
+                        Text(
+                          "Upload Image",
+                          style: TextStyle(fontSize: 20, color: Colors.white),
+                        )
+                      ],
                     ),
                   ),
                 ),
@@ -82,10 +83,11 @@ class _CreateTripState extends State<CreateTrip> {
                         controller: _tripController,
                         style: TextStyle(color: Colors.white),
                         decoration: InputDecoration(
+                            contentPadding: EdgeInsets.all(5),
                             hintText: "Manali, Himachal",
                             hintStyle: TextStyle(
-                                color: Colors.white,
-                                fontSize: 10,
+                                color: Colors.grey,
+                                fontSize: 15,
                                 fontWeight: FontWeight.w400))),
                   ),
                 ),
@@ -108,10 +110,11 @@ class _CreateTripState extends State<CreateTrip> {
                             controller: _dateController,
                             style: TextStyle(color: Colors.white),
                             decoration: InputDecoration(
+                                contentPadding: EdgeInsets.all(5),
                                 hintText: "23/11/2023-2/12/2023",
                                 hintStyle: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 10,
+                                    color: Colors.grey,
+                                    fontSize: 15,
                                     fontWeight: FontWeight.w400))),
                       ),
                       InkWell(
@@ -163,13 +166,39 @@ class _CreateTripState extends State<CreateTrip> {
                         style: TextStyle(color: Colors.white),
                         maxLines: 8,
                         decoration: InputDecoration(
+                            contentPadding: EdgeInsets.all(5),
                             hintText: "Describe the trip details",
                             hintStyle: TextStyle(
-                                color: Colors.white,
-                                fontSize: 10,
+                                color: Colors.grey,
+                                fontSize: 15,
                                 fontWeight: FontWeight.w400))),
                   ),
                 ),
+                SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  height: 200,
+                  width: MediaQuery.of(context).size.width,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          //gender preferences
+                          DropdownButtonHideUnderline(
+                              child: DropdownButton2(
+                            hint: Text("Gender Preference",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 15)),
+                            items: [],
+                          ))
+                        ],
+                      )
+                    ],
+                  ),
+                )
               ],
             ),
           ),
