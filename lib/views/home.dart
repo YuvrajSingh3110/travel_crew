@@ -14,8 +14,8 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final List<String> gender = ['Male', 'Female', 'Any'];
-  List<String> budget = ['Low to High', 'High to Low'];
-  List<String> teamStrength = ['<10', '>10', 'Partner'];
+  final List<String> budget = ['Low to High', 'High to Low'];
+  final List<String> teamStrength = ['<10', '>10', 'Partner'];
 
   String? dropDownValue1;
   String? dropDownValue2;
