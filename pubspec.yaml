@@ -50,6 +50,7 @@ dependencies:
   intl: any
   flutter_bloc: ^8.0.0
   equatable: ^2.0.5
+  path_provider: any
 
 dev_dependencies:
   flutter_test:

@@ -1,10 +1,11 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 
 class CreateTrip extends StatefulWidget {
   const CreateTrip({Key? key}) : super(key: key);
@@ -62,13 +63,22 @@ class _CreateTripState extends State<CreateTrip> {
       final image = await ImagePicker().pickImage(source: ImageSource.gallery);
       if(image == null)
         return;
-      final imageTemp = File(image.path);
+      //final imageTemp = File(image.path);
+      final imagePermanent = await saveImagePermanently(image.path);
       setState(() {
-        this.image = imageTemp;
+        this.image = imagePermanent;
       });
     } on PlatformException catch (e) {
       print("Error in image picker $e");
     }
+  }
+
+  Future<File> saveImagePermanently(String imagePath) async{
+    final directory = await getApplicationDocumentsDirectory();
+    final name = basename(imagePath);
+    final image = File("${directory.path}/$name");
+    print(image);
+    return File(imagePath).copy(image.path);
   }
 
   @override

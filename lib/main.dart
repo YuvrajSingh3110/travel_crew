@@ -65,7 +65,7 @@ class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    Future.delayed(Duration(seconds: 2));
+    //Future.delayed(Duration(seconds: 2));
     FlutterNativeSplash.remove();
     return MultiProvider(
       providers: providers,

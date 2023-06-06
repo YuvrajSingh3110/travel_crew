@@ -49,5 +49,11 @@
 		<true/>
 		<key>UIStatusBarHidden</key>
 		<false/>
+		<key>NSPhotoLibraryUsageDescription</key>
+		<String>To take user profile image</String>
+		<key>NSCameraUsageDescription</key>
+		<String>To choose user profile image</String>
+		<key>NSMicrophoneUsageDescription</key>
+		<String>used to capture audio or image picker plugin</String>
 	</dict>
 </plist>
