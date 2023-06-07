@@ -14,11 +14,11 @@ class _ExploreState extends State<Explore> {
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
-          title: Text(
-            "Explore The World",
-            style: TextStyle(
-                fontWeight: FontWeight.bold, color: Colors.white, fontSize: 30),
-          ),
+        title: Text(
+          "Explore The World",
+          style: TextStyle(
+              fontWeight: FontWeight.bold, color: Colors.white, fontSize: 30),
+        ),
       ),
       body: SingleChildScrollView(
         physics: AlwaysScrollableScrollPhysics(),
@@ -39,8 +39,9 @@ class _ExploreState extends State<Explore> {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(10),
                             child: InkWell(
-                              onTap: (){},
-                              child: Image.asset("lib/assets/images/hotels.png"),
+                              onTap: () {},
+                              child:
+                                  Image.asset("lib/assets/images/hotels.png"),
                             ),
                           ),
                         ),
@@ -49,8 +50,9 @@ class _ExploreState extends State<Explore> {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(10),
                             child: InkWell(
-                              onTap: (){},
-                              child: Image.asset("lib/assets/images/restaurants.png"),
+                              onTap: () {},
+                              child: Image.asset(
+                                  "lib/assets/images/restaurants.png"),
                             ),
                           ),
                         ),
@@ -64,8 +66,9 @@ class _ExploreState extends State<Explore> {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(10),
                             child: InkWell(
-                              onTap: (){},
-                              child: Image.asset("lib/assets/images/temples.png"),
+                              onTap: () {},
+                              child:
+                                  Image.asset("lib/assets/images/temples.png"),
                             ),
                           ),
                         ),
@@ -74,8 +77,9 @@ class _ExploreState extends State<Explore> {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(10),
                             child: InkWell(
-                              onTap: (){},
-                              child: Image.asset("lib/assets/images/monuments.png"),
+                              onTap: () {},
+                              child: Image.asset(
+                                  "lib/assets/images/monuments.png"),
                             ),
                           ),
                         ),
@@ -86,16 +90,25 @@ class _ExploreState extends State<Explore> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: InkWell(
-                          onTap: (){},
-                          child: Image.asset("lib/assets/images/landscapes.png"),
+                          onTap: () {},
+                          child:
+                              Image.asset("lib/assets/images/landscapes.png"),
                         ),
                       ),
                     ),
                   ],
                 ),
               ),
-              SizedBox(height: 15,),
-              Text("Blogs", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 25),),
+              SizedBox(
+                height: 15,
+              ),
+              Text(
+                "Blogs",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    fontSize: 25),
+              ),
               Container(
                 height: MediaQuery.of(context).size.height,
                 child: ListView.builder(
@@ -104,39 +117,70 @@ class _ExploreState extends State<Explore> {
                   scrollDirection: Axis.vertical,
                   itemBuilder: (context, index) {
                     return Container(
-                      child: InkWell(
-                        onTap: () {},
-                        child: Column(
-                          children: [
-                            ClipRRect(
-                                borderRadius: BorderRadius.circular(15),
-                                child: Image.asset(
-                                  "lib/assets/images/blog_image.png",
-                                  fit: BoxFit.cover,
-                                )),
-                            Row(
-                              mainAxisAlignment:
-                              MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "Chandan Kashyap",
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.grey),
+                      padding: EdgeInsets.all(10),
+                      margin: EdgeInsets.symmetric(vertical: 10),
+                      decoration: BoxDecoration(
+                          color: Color(0xff2C2C2E),
+                          borderRadius: BorderRadius.circular(10)
+                      ),
+                      child: Column(
+                        children: [
+                          ClipRRect(
+                              borderRadius: BorderRadius.circular(15),
+                              child: Image.asset(
+                                "lib/assets/images/blog_image.png",
+                                fit: BoxFit.cover,
+                              )),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Chandan Kashyap",
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.grey),
+                              ),
+                              Text(
+                                "Jan 22 2022",
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.grey),
+                              )
+                            ],
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "25 Must See UNESCO World Heritage Sites",
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.blue,
+                                  borderRadius: BorderRadius.circular(10)
                                 ),
-                                Text(
-                                  "Jan 22 2022",
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.grey),
-                                )
-                              ],
-                            ),
-                            Text("25 Must See UNESCO World Heritage Sites")
-                          ],
-                        ),
+                                padding: EdgeInsets.all(10),
+                                margin: EdgeInsets.symmetric(vertical: 5),
+                                child: InkWell(
+                                    onTap: () {},
+                                    child: Text(
+                                      "Read Article ->",
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w400,
+                                          color: Colors.white),
+                                    ),
+                                  ),
+                              ),
+                            ],
+                          )
+                        ],
                       ),
                     );
                   },
