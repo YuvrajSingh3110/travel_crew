@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travel_crew/views/blog.dart';
 
 class Explore extends StatefulWidget {
   const Explore({Key? key}) : super(key: key);
@@ -168,7 +169,9 @@ class _ExploreState extends State<Explore> {
                                 padding: EdgeInsets.all(10),
                                 margin: EdgeInsets.symmetric(vertical: 5),
                                 child: InkWell(
-                                    onTap: () {},
+                                    onTap: () {
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => Blog()));
+                                    },
                                     child: Text(
                                       "Read Article ->",
                                       style: TextStyle(
