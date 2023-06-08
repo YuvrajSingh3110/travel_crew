@@ -50,10 +50,10 @@
 		<key>UIStatusBarHidden</key>
 		<false/>
 		<key>NSPhotoLibraryUsageDescription</key>
-		<String>To take user profile image</String>
+		<string>To take user profile image</string>
 		<key>NSCameraUsageDescription</key>
-		<String>To choose user profile image</String>
+		<string>To choose user profile image</string>
 		<key>NSMicrophoneUsageDescription</key>
-		<String>used to capture audio or image picker plugin</String>
+		<string>used to capture audio or image picker plugin</string>
 	</dict>
 </plist>

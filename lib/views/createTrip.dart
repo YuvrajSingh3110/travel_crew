@@ -1,4 +1,6 @@
+import 'dart:developer';
 import 'dart:io';
+import 'package:appwrite/appwrite.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -6,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:travel_crew/constants/constants.dart';
 
 class CreateTrip extends StatefulWidget {
   const CreateTrip({Key? key}) : super(key: key);
@@ -22,6 +25,18 @@ class _CreateTripState extends State<CreateTrip> {
   TextEditingController _maxBudgetController = new TextEditingController();
   TextEditingController _minAgeController = new TextEditingController();
   TextEditingController _travelController = new TextEditingController();
+
+  @override
+  void dispose() {
+    _tripController.dispose();
+    _dateController.dispose();
+    _descController.dispose();
+    _minBudgetController.dispose();
+    _maxBudgetController.dispose();
+    _minAgeController.dispose();
+    _travelController.dispose();
+    super.dispose();
+  }
 
   final List<String> gender = ['Male', 'Female', 'Any'];
   final List<String> Stay = [
@@ -58,11 +73,10 @@ class _CreateTripState extends State<CreateTrip> {
 
   File? image;
 
-  Future pickImage() async{
+  Future pickImage() async {
     try {
       final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if(image == null)
-        return;
+      if (image == null) return;
       //final imageTemp = File(image.path);
       final imagePermanent = await saveImagePermanently(image.path);
       setState(() {
@@ -73,12 +87,51 @@ class _CreateTripState extends State<CreateTrip> {
     }
   }
 
-  Future<File> saveImagePermanently(String imagePath) async{
+  Future<File> saveImagePermanently(String imagePath) async {
     final directory = await getApplicationDocumentsDirectory();
     final name = basename(imagePath);
     final image = File("${directory.path}/$name");
     print(image);
     return File(imagePath).copy(image.path);
+  }
+
+  Future<bool> _createNewTrip() async {
+    Client client = Client();
+    client
+        .setProject(AppConstants.projectId)
+        .setEndpoint(AppConstants.endPointId);
+    Databases db = Databases(client);
+    Account account = Account(client);
+    final accountData = await account.get();
+
+    try {
+      final res = await db.createDocument(
+          databaseId: AppConstants.tripsDatabaseID,
+          collectionId: AppConstants.tripsCollectionID,
+          documentId: _tripController.text,
+          data: {
+            "title": _tripController.text,
+            "dates": _dateController.text,
+            "description": _descController.text,
+            "gender": dropDownValueGender,
+            "hotel": dropDownValueStay,
+            "food": dropDownValueFood,
+            "language": dropDownValueLang,
+            "budget": dropDownValueCost,
+            "work": dropDownValueWork,
+          },
+          permissions: [
+            Permission.read(Role.any()),
+            Permission.write(Role.user(accountData.$id)),
+            Permission.update(Role.user(accountData.$id)),
+            Permission.delete(Role.user(accountData.$id)),
+          ]
+      );
+      return true;
+    } on Exception catch (e) {
+      log(e.toString());
+    }
+    return false;
   }
 
   @override
@@ -95,6 +148,21 @@ class _CreateTripState extends State<CreateTrip> {
               Icons.arrow_back_ios,
               color: Colors.white,
             )),
+        actions: [
+          IconButton(
+            onPressed: () {
+              _createNewTrip().then((value){
+                if(value){
+                  Navigator.of(context).pop();
+                }
+              });
+            },
+            icon: Icon(
+              Icons.done,
+              color: Colors.white,
+            ),
+          )
+        ],
         title: Text(
           "Create Trip",
           style: TextStyle(
@@ -117,25 +185,32 @@ class _CreateTripState extends State<CreateTrip> {
                   height: 200,
                   width: MediaQuery.of(context).size.width,
                   child: InkWell(
-                    onTap: () async{
+                    onTap: () async {
                       await pickImage();
                     },
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
-                      child: image != null ? Image.file(image!, height: 200,
-                        width: MediaQuery.of(context).size.width, fit: BoxFit.cover,) : Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.cloud_upload,
-                            color: Colors.white,
-                          ),
-                          Text(
-                            "Upload Image",
-                            style: TextStyle(fontSize: 20, color: Colors.white),
-                          )
-                        ],
-                      ),
+                      child: image != null
+                          ? Image.file(
+                              image!,
+                              height: 200,
+                              width: MediaQuery.of(context).size.width,
+                              fit: BoxFit.cover,
+                            )
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.cloud_upload,
+                                  color: Colors.white,
+                                ),
+                                Text(
+                                  "Upload Image",
+                                  style: TextStyle(
+                                      fontSize: 20, color: Colors.white),
+                                )
+                              ],
+                            ),
                     ),
                   ),
                 ),
@@ -150,7 +225,7 @@ class _CreateTripState extends State<CreateTrip> {
                 Container(
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                    color: Color(0xff2C2C2E),
+                      color: Color(0xff2C2C2E),
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(color: Colors.white)),
                   child: Expanded(
@@ -177,7 +252,7 @@ class _CreateTripState extends State<CreateTrip> {
                 Container(
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                    color: Color(0xff2C2C2E),
+                      color: Color(0xff2C2C2E),
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(color: Colors.white)),
                   child: Row(
@@ -235,7 +310,7 @@ class _CreateTripState extends State<CreateTrip> {
                   height: 100,
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                    color: Color(0xff2C2C2E),
+                      color: Color(0xff2C2C2E),
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(color: Colors.white)),
                   child: Expanded(
@@ -628,24 +703,26 @@ class _CreateTripState extends State<CreateTrip> {
                           Container(
                             width: 150,
                             decoration: BoxDecoration(
-                              color: Color(0xff2C2C2E),
+                                color: Color(0xff2C2C2E),
                                 borderRadius: BorderRadius.circular(10),
                                 border: Border.all(color: Colors.white)),
-                            child: Expanded(child: TextField(
-                                controller: _maxBudgetController,
-                                style: TextStyle(color: Colors.white),
-                                decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.all(5),
-                                    hintText: "ex: ₹7000",
-                                    hintStyle: TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w400))
-                            )),
+                            child: Expanded(
+                                child: TextField(
+                                    controller: _maxBudgetController,
+                                    style: TextStyle(color: Colors.white),
+                                    decoration: InputDecoration(
+                                        contentPadding: EdgeInsets.all(5),
+                                        hintText: "ex: ₹7000",
+                                        hintStyle: TextStyle(
+                                            color: Colors.grey,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w400)))),
                           ),
                         ],
                       ),
-                      SizedBox(width: 15,),
+                      SizedBox(
+                        width: 15,
+                      ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -662,24 +739,26 @@ class _CreateTripState extends State<CreateTrip> {
                                 color: Color(0xff2C2C2E),
                                 borderRadius: BorderRadius.circular(10),
                                 border: Border.all(color: Colors.white)),
-                            child: Expanded(child: TextField(
-                                controller: _minBudgetController,
-                                style: TextStyle(color: Colors.white),
-                                decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.all(5),
-                                    hintText: "ex: ₹4000",
-                                    hintStyle: TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w400))
-                            )),
+                            child: Expanded(
+                                child: TextField(
+                                    controller: _minBudgetController,
+                                    style: TextStyle(color: Colors.white),
+                                    decoration: InputDecoration(
+                                        contentPadding: EdgeInsets.all(5),
+                                        hintText: "ex: ₹4000",
+                                        hintStyle: TextStyle(
+                                            color: Colors.grey,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w400)))),
                           ),
                         ],
                       ),
                     ],
                   ),
                 ),
-                SizedBox(height: 15,),
+                SizedBox(
+                  height: 15,
+                ),
                 Container(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -700,21 +779,23 @@ class _CreateTripState extends State<CreateTrip> {
                                 color: Color(0xff2C2C2E),
                                 borderRadius: BorderRadius.circular(10),
                                 border: Border.all(color: Colors.white)),
-                            child: Expanded(child: TextField(
-                                controller: _minAgeController,
-                                style: TextStyle(color: Colors.white),
-                                decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.all(5),
-                                    hintText: "ex: 23",
-                                    hintStyle: TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w400))
-                            )),
+                            child: Expanded(
+                                child: TextField(
+                                    controller: _minAgeController,
+                                    style: TextStyle(color: Colors.white),
+                                    decoration: InputDecoration(
+                                        contentPadding: EdgeInsets.all(5),
+                                        hintText: "ex: 23",
+                                        hintStyle: TextStyle(
+                                            color: Colors.grey,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w400)))),
                           ),
                         ],
                       ),
-                      SizedBox(width: 15,),
+                      SizedBox(
+                        width: 15,
+                      ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -731,17 +812,17 @@ class _CreateTripState extends State<CreateTrip> {
                                 color: Color(0xff2C2C2E),
                                 borderRadius: BorderRadius.circular(10),
                                 border: Border.all(color: Colors.white)),
-                            child: Expanded(child: TextField(
-                                controller: _travelController,
-                                style: TextStyle(color: Colors.white),
-                                decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.all(5),
-                                    hintText: "ex: Road Trip",
-                                    hintStyle: TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w400))
-                            )),
+                            child: Expanded(
+                                child: TextField(
+                                    controller: _travelController,
+                                    style: TextStyle(color: Colors.white),
+                                    decoration: InputDecoration(
+                                        contentPadding: EdgeInsets.all(5),
+                                        hintText: "ex: Road Trip",
+                                        hintStyle: TextStyle(
+                                            color: Colors.grey,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w400)))),
                           ),
                         ],
                       ),
